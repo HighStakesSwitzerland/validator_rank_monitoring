@@ -3,12 +3,11 @@ from time import sleep
 from requests import get
 from discord import SyncWebhook, Embed
 
-from validators import *
+from configuration import *
 
 class GetRank:
     def __init__(self):
         super().__init__()
-        self.discord_url = 'DISCORD WEBHOOK HERE' #(right click on your discord channel --> Edit Channel --> Integrations --> create a webhook and paste its url here)
         self.first_run = True #avoid sending discord alerts each time the process is restarted
 
     def run(self):
@@ -86,12 +85,9 @@ class GetRank:
         return index, total
 
     def discord_message(self, color, description):
-        webhook = SyncWebhook.from_url(self.discord_url)
+        webhook = SyncWebhook.from_url(discord_url)
         embed = Embed(title="Rank Alert", description=description, color=color)
-        webhook.send("<@user_id_1> <@user_id_2>", embed=embed)
+        webhook.send(tagged_users, embed=embed)
 
-        #discord messages can tag specific users identified by their user_id (right click on a user name, --> Copy User ID).
-        #mind the syntax : enclose the id between < >, don't omit the @.
-        #no comma between multiple users.
 
-GetRank().run()
+GetRank().discord_message(000000, "test")

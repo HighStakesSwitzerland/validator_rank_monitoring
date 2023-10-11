@@ -73,7 +73,7 @@ class GetRank:
                     attempt += 1  #REST server did not respond ? Wait a bit and retry
                     sleep(5)
                 else: #abort
-                    print(f"ERROR for {validator[0]}. Please check configuration: {e}")
+                    self.discord_message(16744192, f"Error checking rank for {validator[0]}.\nPlease check configuration: {e}")
                     return validator[4],validator[5]
         # get index of our validator in the list
         try:
@@ -88,6 +88,3 @@ class GetRank:
         webhook = SyncWebhook.from_url(discord_url)
         embed = Embed(title="Rank Alert", description=description, color=color)
         webhook.send(tagged_users, embed=embed)
-
-
-GetRank().discord_message(000000, "test")
